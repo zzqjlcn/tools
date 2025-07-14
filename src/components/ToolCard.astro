@@ -1,0 +1,63 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  icon: string;
+  external?: boolean;
+}
+
+const { href, title, description, icon, external = false } = Astro.props;
+---
+
+<a 
+  href={href} 
+  class="tool-card"
+  { ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}) }
+>
+  <div class="tool-icon">
+    {icon}
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+
+  <style>
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .tool-icon {
+      margin-bottom: 1rem;
+      color: #3498db;
+    }
+
+    .tool-icon svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .tool-card h3 {
+      margin: 0 0 1rem 0;
+      color: #2c3e50;
+    }
+
+    .tool-card p {
+      margin: 0;
+      color: #666;
+      flex-grow: 1;
+    }
+  </style>
+</a>

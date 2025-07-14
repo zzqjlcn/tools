@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ToolCard from '../components/ToolCard.astro';
+---
+
+<Layout title="工具箱门户">
+  <main class="container">
+    <h1 class="title">我的工具箱</h1>
+    <p class="subtitle">工作中用到的工具集合，提升工作效率</p>
+
+    <div class="tools-grid">
+      <ToolCard
+        href="https://zzq.jl.cn"
+        title="个人博客地址"
+        description="记录代码与咖啡的温度，收藏工作里的理性与生活里的诗意的地方"
+        icon=""
+        external
+      />
+
+      <ToolCard
+        href="https://scalar.com/"
+        title="Scalar UI"
+        description="快速测试API的请求与响应，支持多种认证方式，支持SSE协议"
+        icon=""
+        external
+      />
+
+      <ToolCard
+        href="/hottopic.html"
+        title="每日热点数据筛选工具"
+        description="上传包含 JSON 数组的 .json 文件，解析并展示内容，支持筛选、导出等功能"
+        icon=""
+      />
+    </div>
+  </main>
+
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .title {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 3rem;
+      font-size: 1.2rem;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+
+  </style>
+</Layout>
