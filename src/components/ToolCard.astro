@@ -16,7 +16,7 @@ const { href, title, description, icon, external = false } = Astro.props;
   { ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}) }
 >
   <div class="tool-icon">
-    {icon}
+    {icon && <i class={`${icon} fa-xl`} />}
   </div>
   <h3>{title}</h3>
   <p>{description}</p>
@@ -40,13 +40,8 @@ const { href, title, description, icon, external = false } = Astro.props;
     }
 
     .tool-icon {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       color: #3498db;
-    }
-
-    .tool-icon svg {
-      width: 2rem;
-      height: 2rem;
     }
 
     .tool-card h3 {
