@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
+const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "content_original": "原始内容"}];
 ---
 
 <Layout title="每日热点数据筛选工具">
@@ -17,6 +17,7 @@ import Layout from '../layouts/Layout.astro';
                         <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-3"></i>
                         <p class="text-gray-700 font-medium mb-2">点击选择文件或拖拽到此处</p>
                         <p class="text-sm text-gray-500">支持 .json .txt 文件，内容应为 JSON 数组格式</p>
+                        <p class="text-sm text-gray-500">{JSON.stringify(examples)}</p>
                     </div>
                 </label>
             </div>
