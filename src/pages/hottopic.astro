@@ -4,14 +4,13 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
 ---
 
 <Layout title="每日热点数据筛选工具">
-<div class="bg-gray-50 min-h-screen">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
         <div class="bg-white rounded-xl shadow-md p-6 mb-8">
             <h1 class="text-2xl font-bold text-gray-800 mb-4">每日热点数据筛选工具</h1>
             <p class="text-gray-600 mb-6">上传包含 JSON 数组的文件，解析并展示内容</p>
-                       
+                        
             <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6 bg-gray-50">
-                <input type="file" id="fileInput" accept=".txt, .json" class="hidden">
+                <input type="file" id="fileInput" accept=".txt" class="hidden">
                 <label for="fileInput" class="cursor-pointer">
                     <div class="flex flex-col items-center">
                         <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-3"></i>
@@ -193,7 +192,7 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
                                     <i class="fas fa-chevron-down text-xs mr-1"></i>
                                     <span>展开详情</span>
                                 </button>
-                                <div class="expand-content mt-2 text-gray-700 text-sm bg-gray-50 rounded p-3">
+                                <div class="expand-content text-sm bg-gray-50 px-2 py-5 pt-1">
                                     ${highlightText(item.content_original) || '无详细内容'}
                                 </div>
                             </div>
@@ -259,9 +258,54 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
                 }
                 
                 let markdownContent = '';
+                const domainMap = {
+                    "scmp.com":"【港媒-南华早报】",
+                    "tkww.hk":"【港媒-大公文汇】",
+                    "takungpao.com":"【港媒-大公报】",
+                    "mingpao.com":"【港媒-明报】",
+                    "hkej.com":"【港媒-信报】",
+                    "hket.com":"【港媒-香港经济日报】",
+                    "orientaldaily.on.cc":"【港媒-东方日报】",
+                    "std.stheadline.com":"【港媒-星岛日报】",
+                    "singpao.com.hk":"【港媒-成报】",
+                    "wenweipo.com":"【港媒-文汇报】",
+                    "hkcd.com.hk":"【港媒-香港商报】",
+                    "thestandard.com.hk":"【港媒-The Standard】",
+                    "waou.com.mo":"【澳媒-新华澳报】",
+                    "modaily.cn":"【澳媒-澳门日报】",
+                    "jornalvakio.com":"【澳媒-华侨报】",
+                    "xunbaodaily.com":"【澳媒-讯报】",
+                    "chengpou.com.mo":"【澳媒-正报】",
+                    "houkongdailynews.com":"【澳媒-濠江日报】",
+                    "shimindaily.net":"【澳媒-市民日报】",
+                    "thecollectivehk.com":"【黄媒-集志社 The Collective HK】",
+                    "hk01.com":"【黄媒-香港01】",
+                    "points-media.com":"【黄媒-棱角 The Points】",
+                    "ipkmedia.com":"【黄媒-光传媒 Photon Media】",
+                    "inmediahk.net":"【黄媒-独立媒体】",
+                    "aamacau.com":"【黄媒-论尽媒体】",
+                    "thechasernews.co.uk":"【黄媒-追新闻】",
+                    "hkfeature.com":"【黄媒-誌香港】",
+                    "greenbean.media":"【黄媒-绿豆】",
+                    "apostlesmedia.com":"【黄媒-门徒媒体】",
+                    "photonmedia.net":"【黄媒-光传媒】",
+                    "rthk.hk":"【黄媒-香港电台】",
+                    "hongkongfp.com":"【黄媒-香港自由新闻】",
+                    "epochtimes.com":"【黄媒-大纪元时报】"
+                };
                 Array.from(selectedItems).sort().forEach((index, i) => {
                     const item = parsedData[index];
-                    markdownContent += `${i+1}. ${item.title || '无标题'}\n${item.url || '#'}\n${item.summary || '无摘要'}\n\n`;
+                    let source = '【未知源】';
+                    if (item.url) {
+                        Object.entries(domainMap).some(([domain, label]) => {
+                            if (item.url.includes(domain)) {
+                                source = label;
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
+                    markdownContent += `${i+1}. ${source}${item.title || '无标题'}\n${item.url || '#'}\n${item.summary || '无摘要'}\n\n`;
                 });
                 
                 const blob = new Blob([markdownContent], { type: 'text/markdown' });
@@ -276,5 +320,4 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
             });
         });
     </script>
-</div>
 </Layout>
