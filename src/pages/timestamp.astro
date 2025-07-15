@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="时间戳转换工具">
-  <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">时间戳转换工具</h1>
 
     <!-- 时间戳转日期 -->
@@ -53,10 +53,12 @@ import Layout from '../layouts/Layout.astro';
 
   <script>
     // 时间戳转日期时间
-    document.getElementById('tsToDateBtn').addEventListener('click', () => {
-      const input = document.getElementById('timestampInput').value.trim();
+    document.getElementById('tsToDateBtn')?.addEventListener('click', () => {
+      const input = (document.getElementById('timestampInput') as HTMLInputElement)?.value.trim();
       const resultEl = document.getElementById('tsResult');
-
+      if (!resultEl) {
+        return;
+      }
       if (!input) {
         resultEl.textContent = '请输入时间戳';
         resultEl.className = 'text-red-500';
@@ -88,17 +90,19 @@ import Layout from '../layouts/Layout.astro';
         second: '2-digit',
         hour12: false
       };
-      const formattedDate = date.toLocaleString('zh-CN', options);
+      const formattedDate = date.toLocaleString('zh-CN', options as Intl.DateTimeFormatOptions);
       resultEl.textContent = formattedDate;
       resultEl.className = 'text-green-500';
     });
 
     // 日期时间转时间戳
-    document.getElementById('dateToTsBtn').addEventListener('click', () => {
-      const input = document.getElementById('dateInput').value;
+    document.getElementById('dateToTsBtn')?.addEventListener('click', () => {
+      const input = (document.getElementById('dateInput') as HTMLInputElement)?.value;
       const secResultEl = document.getElementById('secTsResult');
       const msResultEl = document.getElementById('msTsResult');
-
+      if (!secResultEl || !msResultEl) {
+        return;
+      }
       if (!input) {
         secResultEl.textContent = '请选择日期时间';
         msResultEl.textContent = '请选择日期时间';
@@ -111,8 +115,8 @@ import Layout from '../layouts/Layout.astro';
       const secTimestamp = Math.floor(date.getTime() / 1000);
       const msTimestamp = date.getTime();
 
-      secResultEl.textContent = secTimestamp;
-      msResultEl.textContent = msTimestamp;
+      secResultEl.textContent = secTimestamp.toString();
+      msResultEl.textContent = msTimestamp.toString();
       secResultEl.className = 'text-green-500';
       msResultEl.className = 'text-green-500';
     });
