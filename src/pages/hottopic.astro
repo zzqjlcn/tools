@@ -305,7 +305,7 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
                             return false;
                         });
                     }
-                    markdownContent += `${i+1}. ${source}${item.title || '无标题'}\n${item.url || '#'}\n${item.summary || '无摘要'}\n\n`;
+                    markdownContent += `${i+1}. ${source}${item.summary || '无摘要'}\n${item.url || '#'}\n${item.content_original || '无原文'}\n\n`;
                 });
                 
                 const blob = new Blob([markdownContent], { type: 'text/markdown' });
