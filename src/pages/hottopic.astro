@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "content_original": "原始内容"}];
+const examples = [{"title": "标题", "category": "经济", "url": "链接", "content_original": "原始内容"}];
 ---
 
 <Layout title="每日热点数据筛选工具">
@@ -140,9 +140,8 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
                 } else {
                     filteredData = parsedData.filter(item => {
                         const titleMatch = item.title && item.title.toLowerCase().includes(currentSearchTerm);
-                        const summaryMatch = item.summary && item.summary.toLowerCase().includes(currentSearchTerm);
                         const contentMatch = item.content_original && item.content_original.toLowerCase().includes(currentSearchTerm);
-                        return titleMatch || summaryMatch || contentMatch;
+                        return titleMatch || contentMatch;
                     });
                     
                     searchCount.textContent = `${filteredData.length} 条结果`;
@@ -187,7 +186,7 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
                                         <i class="fas fa-external-link-alt mr-1"></i>查看链接
                                     </a>
                                 </div>
-                                <p class="text-gray-600 text-sm mt-1 mb-2">${highlightText(item.summary) || '无摘要'}</p>
+                                <p class="text-gray-600 text-sm mt-1 mb-2">${highlightText(item.category) || '无分类'}</p>
                                 <button class="toggle-content text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
                                     <i class="fas fa-chevron-down text-xs mr-1"></i>
                                     <span>展开详情</span>
@@ -305,7 +304,7 @@ const examples = [{"title": "标题", "summary": "摘要", "url": "链接", "con
                             return false;
                         });
                     }
-                    markdownContent += `${i+1}. ${source}${item.summary || '无摘要'}\n${item.url || '#'}\n${item.content_original || '无原文'}\n\n`;
+                    markdownContent += `${i+1}. ${source}${item.category || '无分类'}\n${item.url || '#'}\n${item.content_original || '无原文'}\n\n`;
                 });
                 
                 const blob = new Blob([markdownContent], { type: 'text/markdown' });
