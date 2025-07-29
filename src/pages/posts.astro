@@ -10,7 +10,7 @@ const examples = [{"title": "标题", "username": "用户id", "platform": "平�
             <p class="text-gray-600 mb-6">上传包含 JSON 数组的文件，解析并展示内容</p>
                         
             <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6 bg-gray-50">
-                <input type="file" id="fileInput" accept=".txt" class="hidden">
+                <input type="file" id="fileInput" accept=".txt .json" class="hidden">
                 <label for="fileInput" class="cursor-pointer">
                     <div class="flex flex-col items-center">
                         <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-3"></i>
@@ -161,10 +161,58 @@ const examples = [{"title": "标题", "username": "用户id", "platform": "平�
             
 
             function getDisplayName(username) {
-                const userMap = {
-                    "johnleekachiu":"李家超",
-                    "paulmpchan.fso":"陈茂波",
-                };
+                const userMap = {"StateDept":"美国国务院",
+                                "USTreasury":"美国财政部",
+                                "VP":"美国副总统-万斯",
+                                "SpeakerMcCarthy":"美国众议院议长-凯文·麦卡锡",
+                                "SecBlinken":"美国国务卿-安东尼·布林肯",
+                                "SecYellen":"美国财政部长-珍妮特·耶伦",
+                                "statedeptspox":"美国国务院发言人-塔米·布鲁斯",
+                                "PressSec":"白宫新闻发言人-卡罗琳·莱维特",
+                                "USAmbChina":"美国驻华大使-庞德伟",
+                                "SenatorMenendez":"美国参议院外交委员会主席-鲍勃·梅嫩德斯",
+                                "USCC_GOV":"美国会 美中经济与安全评估委员会",
+                                "CECCgov":"美国会行政当局中国委员会",
+                                "USAinHKMacau":"美国驻港总领馆",
+                                "USCIRF":"美国宗教自由委员会",
+                                "NEDemocracy":"美国国家民主基金会",
+                                "FCDOGovUK":"英国外交、联邦和发展事务部",
+                                "UKParliament":"英国议会",
+                                "JamesCleverly":"英国外交大臣-詹姆斯·克莱弗利",
+                                "UKinHongKong":"英国驻港总领馆",
+                                "Europarl_EN":"欧洲议会",
+                                "EP_ForeignAff":"欧洲议会外交事务委员会",
+                                "JosepBorrellF":"欧盟外交和安全政策高级代表何塞普·波瑞尔",
+                                "AlboMP":"澳大利亚总理安东尼·艾班尼斯",
+                                "SenatorWong":"澳大利亚外交部长-黄英贤",
+                                "UNHumanRights":"联合国人权高专办",
+                                "volker_turk":"联合国人权高专沃尔克·图尔克",
+                                "thecfhk":"香港自由委员会基金会",
+                                "HKLabour":"香港劳权监察",
+                                "hk_watch":"香港监察",
+                                "ParallelParl":"英国平行议会",
+                                "ipacglobal":"对华政策跨国议会联盟",
+                                "amnesty":"国际特赦组织",
+                                "IFJGlobal":"国际记者联盟",
+                                "RSF_inter":"无国界记者",
+                                "SenDanSullivan":"美国参议员丹·苏利文",
+                                "SenJeffMerkley":"美国参议员杰夫·默克利",
+                                "marcorubio":"美国参议员马可·鲁比奥",
+                                "RepYoungKim":"美国众议院议员金映玉",
+                                "McGovernMA":"美国众议院议员吉姆·麦高文",
+                                "CurtisUT":"美国众议院议员匡希恒",
+                                "Isabel_Santos":"欧洲议会议员伊莎贝尔·桑托斯",
+                                "MiriamMLex":"欧洲议会议员米里亚姆·莱克斯曼",
+                                "bueti":"欧洲议会议员莱因哈德·比蒂科夫",
+                                "CatherineWest1":"英国国会议员凯瑟琳·韦斯特",
+                                "IoWBobSeely":"英国国会议员鲍勃·塞利",
+                                "LaylaMoran":"英国国会议员蕾拉·莫兰",
+                                "DavidAltonHL":"英国上议院议员戴维·阿尔顿",
+                                "SenPaterson":"澳大利亚参议员帕特森",
+                                "tomkmiec":"加拿大下议院议员汤姆·克米克",
+                                "PeterDutton_MP":"澳大利亚反对党领袖彼得·达顿",
+                                "benedictrogers":"贝内迪克特·罗杰斯"
+                                };
 
                 return userMap[username] || username
             }
@@ -191,7 +239,7 @@ const examples = [{"title": "标题", "username": "用户id", "platform": "平�
                             <input type="checkbox" class="item-checkbox mt-1 mr-3 h-4 w-4 text-blue-600 rounded" data-index="${originalIndex}">
                             <div class="flex-1">
                                 <div class="flex justify-between items-start">
-                                    <h3 class="font-medium text-gray-800">${highlightText(item.displayname || item.username) || '无用户'}</h3>
+                                    <h3 class="font-medium text-gray-800">${highlightText(getDisplayName(item.displayname) || item.username) || '无用户'}</h3>
                                     <a href="${item.url || '#'}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm ml-2 whitespace-nowrap">
                                         <i class="fas fa-external-link-alt mr-1"></i>查看链接
                                     </a>
@@ -270,7 +318,7 @@ const examples = [{"title": "标题", "username": "用户id", "platform": "平�
                 
                 Array.from(selectedItems).sort().forEach((index, i) => {
                     const item = parsedData[index];
-                    markdownContent += `${i+1}. 【${item.label}:${item.displayname || item.username}】${item.platform}:\n${item.content_cn || '无原文'}\n---\n`;
+                    markdownContent += `${i+1}. 【${item.label}:${getDisplayName(item.displayname) || item.username}】${item.platform}:\n${item.content_cn || '无原文'}\n---\n`;
                 });
                 
                 const blob = new Blob([markdownContent], { type: 'text/markdown' });
